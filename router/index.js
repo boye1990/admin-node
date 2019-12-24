@@ -18,10 +18,11 @@ router.use('/user', userRouter);
 
 /**
  * 集中处理404请求的中间件
- * 注意：该中间必须放在正常处理流程之后
+ * 注意：该中间件必须放在正常处理流程之后
  * 否则， 会拦截正常请求
  */
 router.use((req, res, next) => {
+    // boom.notFound 相当于new Error(), 将参数赋值给err.message
     next(boom.notFound('接口不存在'));
 });
 
@@ -32,6 +33,7 @@ router.use((req, res, next) => {
  * 第二，方法必须放在路由最后
  */
 router.use((err, req, res, next) => {
+    console.log(err);
     const msg = (err && err.message) || '系统错误';
     const statusCode = (err.output && err.output.statusCode) || 500;
     const errorMsg = (err.output && err.output.payload && err.output.payload.error) || err.message;
