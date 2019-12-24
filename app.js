@@ -4,6 +4,21 @@ const express = require('express');
 const app = express();
 
 /**
+ * 中间件是一个函数，在请求和响应周期中被顺序调用
+ * 创建一个中间件 myLogger
+ */
+const myLogger = function ( req, res, next ) {
+    console.log('myLogger')
+    next()
+}
+
+/**
+ * 使用中间件
+ * 中间件需要在响应结束前被调用
+ */
+app.use(myLogger)
+
+/**
  * 路由，应用如何响应请求的一中规则
  * 规则主要分为两部分：
  * 请求方法： get post ...
